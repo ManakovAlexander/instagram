@@ -6,6 +6,15 @@ const uuidv1 = require('uuid/v1');
 
 const router = express.Router()
 
+router.get('', async (req, res, next) => {
+  try {
+    const posts = await Post.find();
+    res.json(posts);
+  } catch (error) {
+    next(error)
+  }
+})
+
 // configuring Multer to use files directory for storing files
 // this is important because later we'll need to access file path
 const storage = multer.diskStorage({
