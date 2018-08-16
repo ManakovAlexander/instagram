@@ -1,40 +1,44 @@
 import * as React from 'react';
-import { IPost } from 'src/models/post';
+import { connect } from 'react-redux';
 import Post from 'src/components/Post';
+import { IStore } from 'src/reducers';
+import { postsRequest } from 'src/actions/posts';
+import { IState as IPostsState } from 'src/reducers/posts';
 
-interface IProps { }
-
-interface IState {
-  posts: IPost[];
+interface IProps extends IPostsState {
+  onFetchPosts: () => void;
 }
 
+interface IState { }
+
 class Posts extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-    this.state = {
-      posts: []
-    };
-  }
   render() {
+    const posts = this.props.posts;
     return (
       <div>
-        { this.state.posts.map(post => <Post post={post} key={post._id} />) }
+        {posts.map(post => <Post post={post} key={post._id} />)}
       </div>
     );
   }
 
   componentWillMount() {
-    fetch('http://localhost:1337/posts')
-      .then(resp => {
-        const isSuccess = resp.ok;
-        return isSuccess ? resp.json() : resp.text();
-      })
-      .then(posts => {
-        if (posts) {
-          this.setState({ posts });
-        }
-      });
+    this.props.onFetchPosts();
   }
 }
 
-export default Posts;
+const mapStateToProps = (store: IStore) => {
+  return store.posts;
+};
+
+const mapDispatchToProps = (dispatch: (action: any) => void) => {
+  return {
+    onFetchPosts: () => dispatch(postsRequest())
+  };
+};
+
+const PostsContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Posts);
+
+export default PostsContainer;
