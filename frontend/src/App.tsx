@@ -1,5 +1,4 @@
 import * as React from 'react';
-import './App.css';
 import AddPost from './containers/AddPost';
 import Posts from './containers/Posts';
 import { Link, Route } from 'react-router-dom';
