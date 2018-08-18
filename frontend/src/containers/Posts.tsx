@@ -11,11 +11,11 @@ interface IProps extends IPostsState {
 
 interface IState { }
 
-class Posts extends React.Component<IProps, IState> {
+class Posts extends React.PureComponent<IProps, IState> {
   render() {
     const posts = this.props.posts;
     return (
-      <div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))', gridGap: 8, padding: 16 }}>
         {posts.map(post => <Post post={post} key={post._id} />)}
       </div>
     );
