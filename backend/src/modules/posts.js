@@ -26,12 +26,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post('', upload.single('file'), async (req, res, next) => {
+router.post('', upload.array('media'), async (req, res, next) => {
   try {
-    const file = req.file;
+    const files = req.files;
     const post = await Post.create({
       _id: new mongoose.Types.ObjectId(),
-      photoId: file.filename,
+      media: files.map(file => file.filename),
       ...req.body
     })
     res.json(post)

@@ -7,10 +7,10 @@ const PostSchema = mongoose.Schema({
     required: true
   },
   description: String,
-  photoId: {
+  media: [{
     type: String,
     required: true
-  },
+  }],
   created: { 
     type: Date,
     default: Date.now

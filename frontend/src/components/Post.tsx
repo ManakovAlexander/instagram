@@ -19,7 +19,7 @@ class Post extends React.Component<IProps> {
             height: 0,
             paddingTop: '56.25%'
           }}
-          image={`http://localhost:1337/files/${post.photoId}`}
+          image={`http://localhost:1337/files/${post.media[0]}`}
         />
         <CardContent>
           <Typography gutterBottom={true} variant="headline" component="h2">

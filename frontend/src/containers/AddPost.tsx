@@ -1,29 +1,23 @@
 import * as React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { IPost } from 'src/models/post';
+import { IMedia } from '../models/post';
+import MediaPreview from '../components/MediaPreview';
 
 interface IProps { }
 
 interface IState {
-  file: File | null;
-  imagePreviewUrl: string | null;
   title: string | undefined;
   description: string | undefined;
-  post: IPost | null;
+  media: IMedia[];
 }
 
 class AddPost extends React.Component<IProps, IState> {
   readonly state: IState = {
-    file: null,
-    imagePreviewUrl: null,
     title: '',
     description: '',
-    post: null
+    media: []
   };
-  constructor(props: IProps) {
-    super(props);
-  }
 
   render() {
     return (
@@ -41,7 +35,7 @@ class AddPost extends React.Component<IProps, IState> {
               Upload
               </Button>
           </label>
-          {this.state.imagePreviewUrl && <img src={this.state.imagePreviewUrl} width="300" />}
+          {this.state.media && this.state.media.map((media, index) => <MediaPreview key={index} media={media} />)}
           <TextField
             id="title"
             label="Title"
@@ -77,8 +71,7 @@ class AddPost extends React.Component<IProps, IState> {
     }
     const file = ev.currentTarget.files[0];
     const reader = new FileReader();
-    this.setState({ file });
-    reader.onloadend = () => this.setState({ imagePreviewUrl: reader.result as string });
+    reader.onloadend = () => this.setState(({ media }) => ({ media: media.concat({ file, imagePreviewUrl: reader.result as string }) }));
     reader.readAsDataURL(file);
   }
 
@@ -96,8 +89,10 @@ class AddPost extends React.Component<IProps, IState> {
     }
 
     const body = new FormData();
-    if (this.state.file) {
-      body.append('file', this.state.file);
+    if (this.state.media && this.state.media.length > 0) {
+      this.state.media.forEach(media => {
+        body.append('media', media.file);
+      });
     }
     if (this.state.title) {
       body.append('title', this.state.title);
@@ -109,20 +104,11 @@ class AddPost extends React.Component<IProps, IState> {
     fetch('http://localhost:1337/posts', {
       method: 'POST',
       body
-    })
-      .then(resp => {
-        const isSuccess = resp.ok;
-        return isSuccess ? resp.json() : resp.text();
-      })
-      .then(post => {
-        if (post) {
-          this.setState({ post });
-        }
-      });
+    });
   }
 
   get postIsValid() {
-    return !!this.state.file && !!this.state.title;
+    return this.state.media.length > 0 && !!this.state.title;
   }
 }
 
