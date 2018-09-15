@@ -27,9 +27,11 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        {
-          pages.map((page, i) => <Route path={page.path} key={i} component={page.component} />)
-        }
+        <div>
+          {
+            pages.map((page, i) => <Route path={page.path} key={i} component={page.component} />)
+          }
+        </div>
         <Footer pages={pages} />
       </div>
     );
