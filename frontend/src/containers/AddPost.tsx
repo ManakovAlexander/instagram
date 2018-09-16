@@ -22,7 +22,7 @@ class AddPost extends React.Component<IProps, IState> {
   render() {
     return (
       <div>
-        <form style={{ display: 'flex', flexDirection: 'column', margin: 8 }}>
+        <form style={{ display: 'flex', flexDirection: 'column', padding: 8 }}>
           <input
             accept="image/*"
             style={{ display: 'none' }}
