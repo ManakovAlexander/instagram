@@ -31,6 +31,7 @@ class Footer extends React.PureComponent<IProps, State> {
           value={this.state.pageIdx}
           onChange={this.handleChange}
           showLabels={true}
+          style={{ position: 'sticky', bottom: -1 }}
         >
           {
             pages.map((page, i) => <BottomNavigationAction label={page.label} icon={<page.icon />} key={i} />)

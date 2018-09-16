@@ -15,8 +15,10 @@ class Posts extends React.PureComponent<IProps, IState> {
   render() {
     const posts = this.props.posts;
     return (
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))', gridGap: 8, padding: 16 }}>
-        {posts.map(post => <Post post={post} key={post._id} />)}
+      <div style={{ padding: 8 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))', gridGap: 8 }}>
+          {posts.map(post => <Post post={post} key={post._id} />)}
+        </div>
       </div>
     );
   }
