@@ -36,5 +36,12 @@ export const reducer = (state: IState = initialState, action: { type: string, [k
     };
   }
 
+  if (action.type === 'POSTS_DELETE') {
+    return {
+      ...state,
+      posts: state.posts.filter(post => post._id !== action.postId)
+    };
+  }
+
   return state;
 };

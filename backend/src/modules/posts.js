@@ -40,4 +40,13 @@ router.post('', upload.array('media'), async (req, res, next) => {
   }
 })
 
+router.delete('/:id', async (req, res, next) => {
+  try {
+    await Post.deleteMany({ '_id': req.params.id })
+    res.json(null)
+  } catch (error) {
+    next(error)
+  }
+})
+
 module.exports = router
