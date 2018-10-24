@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/app.js",
-    "start-mongo-server": "mongod --dbpath ./srv/mongodb/ --port 27017",
+    "start-mongo-server": "mongod --dbpath ./data/db/ --port 27017",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
