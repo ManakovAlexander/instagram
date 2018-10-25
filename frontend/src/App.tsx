@@ -5,6 +5,7 @@ import { Home, Add } from '@material-ui/icons';
 import AddPost from './containers/AddPost';
 import Posts from './containers/Posts';
 import Footer from './components/Footer';
+import Register from './containers/Register';
 
 const pages = [
   {
@@ -19,6 +20,13 @@ const pages = [
     icon: Add,
     path: '/add-post',
     component: AddPost,
+    isInitial: false
+  },
+  {
+    label: 'Register',
+    icon: Add,
+    path: `/register`,
+    component: Register,
     isInitial: false
   }
 ];
