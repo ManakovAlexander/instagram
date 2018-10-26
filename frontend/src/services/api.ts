@@ -1,7 +1,16 @@
 import { baseUrl } from '../constants';
 
-export const request = async (url: string, params?: RequestInit) => {
-  const resp = await fetch(`${baseUrl}${url}`, params);
+interface ICustomRequestParams extends RequestInit {
+  shouldStringifyBody?: boolean;
+  body?: any;
+}
+
+export const request = async (url: string, requestParams: ICustomRequestParams = {}) => {
+  const { shouldStringifyBody, body, ...params } = requestParams;
+  const resp = await fetch(`${baseUrl}${url}`, {
+    ...params,
+    body: shouldStringifyBody === false || body == null ? body : JSON.stringify(body),
+  });
   const isSuccess = resp.ok;
   if (isSuccess) {
     return await resp.json();

@@ -4,6 +4,26 @@ import Button from '@material-ui/core/Button';
 import { IMedia } from '../models/post';
 import MediaPreview from '../components/MediaPreview';
 
+const styles = {
+  form: {
+    display: 'flex',
+    flexDirection: 'column' as 'column',
+    padding: 8,
+  },
+  imageInput: {
+    display: 'none',
+  },
+  titleField: {
+    margin: 8,
+  },
+  descriptionField: {
+    margin: 8,
+  },
+  saveButton: {
+    margin: 8,
+  }
+};
+
 interface IProps { }
 
 interface IState {
@@ -12,7 +32,7 @@ interface IState {
   media: IMedia[];
 }
 
-class AddPost extends React.Component<IProps, IState> {
+class EditPost extends React.Component<IProps, IState> {
   readonly state: IState = {
     title: '',
     description: '',
@@ -22,10 +42,10 @@ class AddPost extends React.Component<IProps, IState> {
   render() {
     return (
       <div>
-        <form style={{ display: 'flex', flexDirection: 'column', padding: 8 }}>
+        <form style={styles.form}>
           <input
             accept="image/*"
-            style={{ display: 'none' }}
+            style={styles.imageInput}
             id="file-button"
             type="file"
             onChange={this.handleFileChange}
@@ -42,7 +62,7 @@ class AddPost extends React.Component<IProps, IState> {
             value={this.state.title}
             onChange={this.handleTitleChange}
             required={true}
-            style={{ margin: 8 }}
+            style={styles.titleField}
           />
           <TextField
             id="description"
@@ -50,14 +70,14 @@ class AddPost extends React.Component<IProps, IState> {
             value={this.state.description}
             onChange={this.handleDescriptionChange}
             multiline={true}
-            style={{ margin: 8 }}
+            style={styles.descriptionField}
           />
           <Button
             variant="outlined"
             color="primary"
             disabled={!this.postIsValid}
             onClick={this.sendPost}
-            style={{ margin: 8 }}>
+            style={styles.saveButton}>
             Save
           </Button>
         </form>
@@ -112,4 +132,4 @@ class AddPost extends React.Component<IProps, IState> {
   }
 }
 
-export default AddPost;
+export default EditPost;

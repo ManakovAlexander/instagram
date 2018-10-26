@@ -2,10 +2,10 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import Post from 'src/components/Post';
 import { IStore } from 'src/reducers';
-import { postsRequest, postDeleteRequest } from 'src/actions/posts';
-import { IState as IPostsState } from 'src/reducers/posts';
+import { fetchPosts, deletePost } from 'src/actions/posts';
+import { State as PostsState } from 'src/reducers/posts';
 
-interface IProps extends IPostsState {
+interface IProps extends PostsState {
   onFetchPosts: () => void;
   onDeletePost: (postId: string) => void;
 }
@@ -39,8 +39,8 @@ const mapStateToProps = (store: IStore) => {
 
 const mapDispatchToProps = (dispatch: (action: any) => void) => {
   return {
-    onFetchPosts: () => dispatch(postsRequest()),
-    onDeletePost: (postId: string) => dispatch(postDeleteRequest(postId)),
+    onFetchPosts: () => dispatch(fetchPosts()),
+    onDeletePost: (postId: string) => dispatch(deletePost(postId)),
   };
 };
 

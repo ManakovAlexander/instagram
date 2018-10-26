@@ -1,46 +1,28 @@
 import { IPost } from '../models/post';
+import { ActionTypes } from '../actions/posts';
+import { Reducer } from 'redux';
 
-export interface IState {
-  posts: IPost[];
-  inProgress: boolean;
-  error: any;
+export class State {
+  posts: IPost[] = [];
+  inProgress = false;
+  error: Error | null = null;
 }
 
-const initialState: IState = {
-  posts: [],
-  inProgress: false,
-  error: null
-};
-
-export const reducer = (state: IState = initialState, action: { type: string, [key: string]: any }) => {
-  if (action.type === 'POSTS_REQUEST') {
-    return {
-      ...state,
-      inProgress: true
-    };
+export const reducer: Reducer<State, ActionTypes> = (state = new State(), action: ActionTypes) => {
+  if (action.type === 'posts/set') {
+    return { ...state, posts: action.payload };
   }
 
-  if (action.type === 'POSTS_REQUEST_SUCCESS') {
-    return {
-      ...state,
-      posts: action.posts,
-      inProgress: false
-    };
+  if (action.type === 'posts/setInProgress') {
+    return { ...state, inProgress: action.payload };
   }
 
-  if (action.type === 'POSTS_REQUEST') {
-    return {
-      ...state,
-      error: action.error,
-      inProgress: false
-    };
+  if (action.type === 'posts/setError') {
+    return { ...state, error: action.payload };
   }
 
-  if (action.type === 'POSTS_DELETE') {
-    return {
-      ...state,
-      posts: state.posts.filter(post => post._id !== action.postId)
-    };
+  if (action.type === 'posts/delete') {
+    return { ...state, posts: state.posts.filter(post => post._id !== action.payload) };
   }
 
   return state;

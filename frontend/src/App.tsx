@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Route } from 'react-router-dom';
 import { Home, Add } from '@material-ui/icons';
 
-import AddPost from './containers/AddPost';
+import EditPost from './containers/EditPost';
 import Posts from './containers/Posts';
 import Footer from './components/Footer';
 import Register from './containers/Register';
@@ -19,7 +19,7 @@ const pages = [
     label: 'Add post',
     icon: Add,
     path: '/add-post',
-    component: AddPost,
+    component: EditPost,
     isInitial: false
   },
   {
