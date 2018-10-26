@@ -9,7 +9,7 @@ export class State {
   error: Error | null = null;
 }
 
-export const reducer: Reducer<State, RegisterActions> = (state: State = new State(), action) => {
+export const reducer: Reducer<State, RegisterActions> = (state: State = { ...new State() }, action) => {
   if (action.type === 'register/setInProgress') {
     return {
       ...state,

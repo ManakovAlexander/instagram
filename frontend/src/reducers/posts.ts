@@ -8,7 +8,7 @@ export class State {
   error: Error | null = null;
 }
 
-export const reducer: Reducer<State, ActionTypes> = (state = new State(), action: ActionTypes) => {
+export const reducer: Reducer<State, ActionTypes> = (state = { ...new State() }, action: ActionTypes) => {
   if (action.type === 'posts/set') {
     return { ...state, posts: action.payload };
   }

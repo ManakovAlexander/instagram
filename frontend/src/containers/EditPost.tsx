@@ -1,8 +1,12 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { IMedia } from '../models/post';
+import { IStore } from 'src/reducers';
 import MediaPreview from '../components/MediaPreview';
+import { createPost } from '../actions/edit-post';
+import { State as StoreState } from '../reducers/edit-post';
 
 const styles = {
   form: {
@@ -24,20 +28,16 @@ const styles = {
   }
 };
 
-interface IProps { }
+interface IProps extends IMapDispatchToProps, IMapStateToProps { }
 
-interface IState {
-  title: string | undefined;
-  description: string | undefined;
-  media: IMedia[];
+class State {
+  readonly title: string = '';
+  readonly description: string = '';
+  readonly media: IMedia[] = [];
 }
 
-class EditPost extends React.Component<IProps, IState> {
-  readonly state: IState = {
-    title: '',
-    description: '',
-    media: []
-  };
+class EditPost extends React.Component<IProps, State> {
+  readonly state = new State();
 
   render() {
     return (
@@ -108,28 +108,48 @@ class EditPost extends React.Component<IProps, IState> {
       return;
     }
 
-    const body = new FormData();
+    const postFormData = new FormData();
     if (this.state.media && this.state.media.length > 0) {
       this.state.media.forEach(media => {
-        body.append('media', media.file);
+        postFormData.append('media', media.file);
       });
     }
     if (this.state.title) {
-      body.append('title', this.state.title);
+      postFormData.append('title', this.state.title);
     }
     if (this.state.description) {
-      body.append('description', this.state.description);
+      postFormData.append('description', this.state.description);
     }
 
-    fetch('http://localhost:1337/posts', {
-      method: 'POST',
-      body
-    });
+    this.props.onCreatePosts(postFormData);
   }
 
   get postIsValid() {
     return this.state.media.length > 0 && !!this.state.title;
   }
+
+  get saveIsDisabled() {
+    return !this.postIsValid || this.props.saveInProgress || this.props.fetchInProgress;
+  }
 }
 
-export default EditPost;
+type IMapStateToProps = StoreState;
+
+const mapStateToProps = (store: IStore): IMapStateToProps => store.editPost;
+
+interface IMapDispatchToProps {
+  onCreatePosts: (postFormData: FormData) => void;
+}
+
+const mapDispatchToProps = (dispatch: (action: any) => void): IMapDispatchToProps => {
+  return {
+    onCreatePosts: (postFormData: FormData) => dispatch(createPost(postFormData)),
+  };
+};
+
+const EditPostContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditPost);
+
+export default EditPostContainer;
