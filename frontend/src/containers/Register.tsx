@@ -41,13 +41,13 @@ class Register extends React.Component<IProps, State> {
           label="password"
           margin="normal"
           onChange={this.handlePasswordChange}
+          type="password"
         />
         <TextField
           required={true}
           label="name"
           margin="normal"
           onChange={this.handleNameChange}
-          type="password"
         />
         <Button variant="outlined" color="primary" type="submit" disabled={!isFormValid}>
           Register
