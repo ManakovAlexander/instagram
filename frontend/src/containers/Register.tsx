@@ -1,6 +1,11 @@
 import * as React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { connect } from 'react-redux';
+import { register } from '../actions/register/index';
+import { IRegisterData } from '../models/register';
+import { State as StoreState } from '../reducers/register';
+import { IStore } from '../reducers';
 
 const styles = {
   form: {
@@ -10,7 +15,7 @@ const styles = {
   }
 };
 
-interface IProps { }
+interface IProps extends IMapDispatchToProps { }
 
 class State {
   login = '';
@@ -18,7 +23,7 @@ class State {
   name = '';
 }
 
-class RegisterContainer extends React.Component<IProps, State> {
+class Register extends React.Component<IProps, State> {
   state = new State();
 
   render() {
@@ -65,7 +70,8 @@ class RegisterContainer extends React.Component<IProps, State> {
 
   handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    console.log(this.state);
+    const { login, password, name } = this.state;
+    this.props.onRegister({ login, password, name });
   }
 
   isFormValid = (): boolean => {
@@ -73,5 +79,26 @@ class RegisterContainer extends React.Component<IProps, State> {
     return !!login && !!password && !!name;
   }
 }
+
+type IMapStateToProps = StoreState;
+
+const mapStateToProps = (store: IStore): IMapStateToProps => {
+  return store.register;
+};
+
+interface IMapDispatchToProps {
+  onRegister: (data: IRegisterData) => void;
+}
+
+const mapDispatchToProps = (dispatch: (action: any) => void): IMapDispatchToProps => {
+  return {
+    onRegister: data => dispatch(register(data)),
+  };
+};
+
+const RegisterContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Register);
 
 export default RegisterContainer;
