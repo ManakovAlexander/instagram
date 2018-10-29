@@ -6,6 +6,7 @@ import { register } from '../actions/register/index';
 import { IRegisterData } from '../models/register';
 import { State as StoreState } from '../reducers/register';
 import { IStore } from '../reducers';
+import { Redirect } from 'react-router';
 
 const styles = {
   form: {
@@ -15,18 +16,21 @@ const styles = {
   }
 };
 
-interface IProps extends IMapDispatchToProps { }
+interface IProps extends IMapStateToProps, IMapDispatchToProps { }
 
 class State {
-  login = '';
-  password = '';
-  name = '';
+  readonly login: string = '';
+  readonly password: string = '';
+  readonly name: string = '';
 }
 
 class Register extends React.Component<IProps, State> {
-  state = new State();
+  readonly state = new State();
 
   render() {
+    if (this.props.token) {
+      return <Redirect to="/posts" />;
+    }
     const isFormValid = this.isFormValid();
     return (
       <form onSubmit={this.handleSubmit} style={styles.form}>
@@ -80,10 +84,15 @@ class Register extends React.Component<IProps, State> {
   }
 }
 
-type IMapStateToProps = StoreState;
+interface IMapStateToProps extends StoreState {
+  token: string | null;
+}
 
 const mapStateToProps = (store: IStore): IMapStateToProps => {
-  return store.register;
+  return {
+    ...store.register,
+    token: store.auth.token,
+  };
 };
 
 interface IMapDispatchToProps {

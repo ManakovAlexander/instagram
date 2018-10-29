@@ -1,13 +1,13 @@
 import { IPost } from '../models/post';
-import { ActionTypes } from '../actions/posts';
+import { ActionTypes } from '../actions/edit-post';
 import { Reducer } from 'redux';
 
 export class State {
-  post: IPost | null = null;
-  fetchInProgress = false;
-  fetchError: Error | null = null;
-  saveInProgress = false;
-  saveError: Error | null = null;
+  readonly post: IPost | null = null;
+  readonly fetchInProgress = false;
+  readonly fetchError: Error | null = null;
+  readonly saveInProgress = false;
+  readonly saveError: Error | null = null;
 }
 
 export const reducer: Reducer<State, ActionTypes> = (state = { ...new State() }, action: ActionTypes) => {

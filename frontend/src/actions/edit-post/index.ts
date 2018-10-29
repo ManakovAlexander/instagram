@@ -1,9 +1,8 @@
 import { ActionType } from 'typesafe-actions';
-
 import * as actions from './sync';
-import { postRequest, createPostRequests } from '../../requests/post';
-
 import { Dispatch } from 'redux';
+
+import { postRequest, createPostRequests } from '../../requests/post';
 
 export type ActionTypes = ActionType<typeof actions>;
 

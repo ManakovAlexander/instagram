@@ -5,7 +5,7 @@ interface ICustomRequestParams extends RequestInit {
   body?: any;
 }
 
-export const request = async (url: string, requestParams: ICustomRequestParams = {}) => {
+export const request = async <R>(url: string, requestParams: ICustomRequestParams = {}): Promise<R> => {
   const { shouldStringifyBody = true, body, ...params } = requestParams;
   let headers: HeadersInit = {
     'Accept': 'application/json',

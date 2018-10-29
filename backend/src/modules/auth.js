@@ -1,9 +1,28 @@
 const express = require('express');
-const router = express.Router();
-const passport = require('passport');
+const mongoose = require('mongoose');
+const uuidv4 = require('uuid/v4');
 
-router.post('', passport.authenticate('local'), async (req, res, next) => {
-  res.json({ test: 'test' });
+const User = require('../models/user');
+const AuthToken = require('../models/auth-token');
+
+const router = express.Router();
+
+router.put('', async (req, res, next) => {
+  try {
+    const { login, password } = req.body;
+    const user = await User.findOne({ login, password }).exec();
+    if (!user) {
+      throw new Error('Invalid login or password');
+    }
+    const authToken = await AuthToken.create({
+      _id: new mongoose.Types.ObjectId(),
+      userId: user._id,
+      token: uuidv4(),
+    });
+    res.json({ token: authToken._id })
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;

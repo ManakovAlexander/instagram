@@ -3,9 +3,9 @@ import { ActionTypes } from '../actions/posts';
 import { Reducer } from 'redux';
 
 export class State {
-  posts: IPost[] = [];
-  inProgress = false;
-  error: Error | null = null;
+  readonly posts: IPost[] = [];
+  readonly inProgress: boolean = false;
+  readonly error: Error | null = null;
 }
 
 export const reducer: Reducer<State, ActionTypes> = (state = { ...new State() }, action: ActionTypes) => {

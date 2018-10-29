@@ -3,8 +3,6 @@ const methodOverride = require('method-override')
 const bodyParser = require('body-parser')
 const cors = require('./libs/cors')
 const errorHandlers = require('./libs/error-handlers')
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 
 const app = express()
 
@@ -22,16 +20,6 @@ async function getConnection({ url = 'localhost', port = '27017', dbName }) {
 }
 getConnection({ dbName })
 
-// passport.use(new LocalStrategy({
-//   usernameField: 'login',
-//   passwordField: 'passwd'
-// }, (login, password, done) => {
-//   const user = { login, password };
-//   console.log(user);
-//   return done(null, user);
-// }));
-
-// app.use(passport.initialize());
 app.use('/files', express.static('files'));
 app.use('/auth', require('./modules/auth'))
 app.use('/users', require('./modules/users'))

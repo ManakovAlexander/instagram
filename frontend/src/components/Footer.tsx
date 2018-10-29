@@ -1,9 +1,17 @@
 import * as React from 'react';
-import { Redirect } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 
+const style = {
+  bottomNavigation: {
+    position: 'sticky' as 'sticky',
+    bottom: -1,
+  },
+};
+
 interface IPage {
+  id: number;
   label: string;
   icon: any;
   path: string;
@@ -12,36 +20,36 @@ interface IPage {
 
 interface IProps {
   pages: IPage[];
+  id: number;
+  redirect: (id: number) => void;
 }
 
-class State {
-  pageIdx: number = 0;
-}
-
-class Footer extends React.PureComponent<IProps, State> {
-  readonly state = new State();
+class Footer extends React.PureComponent<IProps> {
   render() {
-    const { pages } = this.props;
+    const { pages, id } = this.props;
     return (
-      <>
+      <BottomNavigation
+        value={id}
+        onChange={this.handleChange}
+        showLabels={true}
+        style={style.bottomNavigation}
+      >
         {
-          this.state.pageIdx != null && pages && <Redirect to={pages[this.state.pageIdx].path} />
+          pages.map(page => (
+            <BottomNavigationAction
+              component={Link}
+              { ...{ "to": page.path } }
+              label={page.label}
+              icon={<page.icon />}
+              key={page.id}
+              value={page.id} />
+          ))
         }
-        <BottomNavigation
-          value={this.state.pageIdx}
-          onChange={this.handleChange}
-          showLabels={true}
-          style={{ position: 'sticky', bottom: -1 }}
-        >
-          {
-            pages.map((page, i) => <BottomNavigationAction label={page.label} icon={<page.icon />} key={i} />)
-          }
-        </BottomNavigation>
-      </>
+      </BottomNavigation>
     );
   }
 
-  private handleChange = (event: any, pageIdx: number) => this.setState({ pageIdx });
+  private handleChange = (event: any, id: number) => this.props.redirect(id);
 }
 
 export default Footer;

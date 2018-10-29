@@ -5,8 +5,8 @@ import * as registerActions from '../actions/register/sync';
 type RegisterActions = ActionType<typeof registerActions>;
 
 export class State {
-  inProgress = false;
-  error: Error | null = null;
+  readonly inProgress: boolean = false;
+  readonly error: Error | null = null;
 }
 
 export const reducer: Reducer<State, RegisterActions> = (state: State = { ...new State() }, action) => {

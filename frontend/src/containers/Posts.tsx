@@ -10,9 +10,7 @@ interface IProps extends PostsState {
   onDeletePost: (postId: string) => void;
 }
 
-interface IState { }
-
-class Posts extends React.PureComponent<IProps, IState> {
+class Posts extends React.PureComponent<IProps> {
   componentWillMount() {
     this.props.onFetchPosts();
   }
