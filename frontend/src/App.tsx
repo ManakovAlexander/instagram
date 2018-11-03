@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Home, Add, AccountBox } from '@material-ui/icons';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
 
 
 import EditPost from './containers/EditPost';
@@ -10,8 +10,9 @@ import Register from './containers/Register';
 import Auth from './containers/Auth';
 import { IStore } from './reducers';
 import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 
-interface IProps extends IMapStateToProps { }
+interface IProps extends IMapStateToProps, RouteComponentProps { }
 
 const pages = [
   {
@@ -52,13 +53,11 @@ const pages = [
   },
 ];
 
-class State {
-  readonly id: number = 1;
-}
-
-class App extends React.Component<IProps, State> {
-  readonly state = new State();
+class App extends React.Component<IProps> {
   render() {
+    const { pathname } = this.props.location;
+    const activePage = pages.find(page => page.path === pathname);
+    const activePageId = activePage ? activePage.id : null;
     const filteredPages = pages.filter(page => page.show ? page.show(this.props) : true);
     return (
       <div className="App">
@@ -67,14 +66,15 @@ class App extends React.Component<IProps, State> {
             filteredPages
               .map(page => <Route path={page.path} exact={true} key={page.id} component={page.component} />)
           }
+          <Redirect to={pages[0].path} />
         </Switch>
-        <Footer pages={filteredPages} id={this.state.id} redirect={this.handleRedirect} />
+        <Footer pages={filteredPages} activePageId={activePageId} />
       </div>
     );
   }
 
-  handleRedirect = (id: number) => {
-    this.setState({ id });
+  handleRedirect = (activePageId: number) => {
+    this.setState({ activePageId });
   }
 }
 

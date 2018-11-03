@@ -20,17 +20,15 @@ interface IPage {
 
 interface IProps {
   pages: IPage[];
-  id: number;
-  redirect: (id: number) => void;
+  activePageId: number | null;
 }
 
 class Footer extends React.PureComponent<IProps> {
   render() {
-    const { pages, id } = this.props;
+    const { pages, activePageId } = this.props;
     return (
       <BottomNavigation
-        value={id}
-        onChange={this.handleChange}
+        value={activePageId}
         showLabels={true}
         style={style.bottomNavigation}
       >
@@ -48,8 +46,6 @@ class Footer extends React.PureComponent<IProps> {
       </BottomNavigation>
     );
   }
-
-  private handleChange = (event: any, id: number) => this.props.redirect(id);
 }
 
 export default Footer;
