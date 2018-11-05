@@ -4,8 +4,3 @@ export interface IPost {
   title: string;
   description: string;
 }
-
-export interface IMedia {
-  file: File;
-  imagePreviewUrl: string;
-}

@@ -12,11 +12,11 @@ const styles = {
   form: {
     display: 'flex',
     flexDirection: 'column' as 'column',
-    padding: 8,
+    padding: 8
   }
 };
 
-interface IProps extends IMapStateToProps, IMapDispatchToProps { }
+interface IProps extends IMapStateToProps, IMapDispatchToProps {}
 
 class State {
   readonly login: string = '';
@@ -53,7 +53,12 @@ class Register extends React.Component<IProps, State> {
           margin="normal"
           onChange={this.handleNameChange}
         />
-        <Button variant="outlined" color="primary" type="submit" disabled={!isFormValid}>
+        <Button
+          variant="outlined"
+          color="primary"
+          type="submit"
+          disabled={!isFormValid}
+        >
           Register
         </Button>
       </form>
@@ -91,7 +96,7 @@ interface IMapStateToProps extends StoreState {
 const mapStateToProps = (store: IStore): IMapStateToProps => {
   return {
     ...store.register,
-    token: store.auth.token,
+    token: store.auth.token
   };
 };
 
@@ -99,15 +104,17 @@ interface IMapDispatchToProps {
   onRegister: (data: IRegisterData) => void;
 }
 
-const mapDispatchToProps = (dispatch: (action: any) => void): IMapDispatchToProps => {
+const mapDispatchToProps = (
+  dispatch: (action: any) => void
+): IMapDispatchToProps => {
   return {
-    onRegister: data => dispatch(register(data)),
+    onRegister: data => dispatch(register(data))
   };
 };
 
 const RegisterContainer = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Register);
 
 export default RegisterContainer;

@@ -7,16 +7,18 @@ const PostSchema = mongoose.Schema({
     required: true
   },
   description: String,
-  media: [{
-    type: String,
-    required: true
-  }],
-  created: { 
+  media: [
+    {
+      type: String,
+      required: true
+    }
+  ],
+  created: {
     type: Date,
     default: Date.now
   }
-})
+});
 
 const Post = mongoose.model('Post', PostSchema);
 
-module.exports = Post
+module.exports = Post;

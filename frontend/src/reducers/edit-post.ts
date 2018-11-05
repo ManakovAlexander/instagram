@@ -10,6 +10,9 @@ export class State {
   readonly saveError: Error | null = null;
 }
 
-export const reducer: Reducer<State, ActionTypes> = (state = { ...new State() }, action: ActionTypes) => {
+export const reducer: Reducer<State, ActionTypes> = (
+  state = { ...new State() },
+  action: ActionTypes
+) => {
   return state;
 };

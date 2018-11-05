@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IMedia } from '../models/post';
+import { IMedia } from 'src/models/media';
 
 interface IProps {
   media: IMedia;
@@ -8,9 +8,7 @@ interface IProps {
 class MediaPreview extends React.Component<IProps> {
   render() {
     const media = this.props.media;
-    return (
-      <img src={media.imagePreviewUrl} width="300" />
-    );
+    return <img src={media.imagePreviewUrl} width="300" />;
   }
 }
 

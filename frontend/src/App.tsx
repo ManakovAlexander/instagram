@@ -1,27 +1,28 @@
 import * as React from 'react';
-import { Home, Add, AccountBox } from '@material-ui/icons';
+import { Home, Add, AccountBox, AccountCircle } from '@material-ui/icons';
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 
+import { IStore } from './reducers';
+import { IPage } from './models';
 
 import EditPost from './containers/EditPost';
 import Posts from './containers/Posts';
 import Footer from './components/Footer';
 import Register from './containers/Register';
 import Auth from './containers/Auth';
-import { IStore } from './reducers';
-import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
+import Profile from './containers/Profile';
 
 interface IProps extends IMapStateToProps, RouteComponentProps { }
 
-const pages = [
+const pages: IPage[] = [
   {
     id: 1,
     label: 'Posts',
     icon: Home,
     path: '/posts',
     component: Posts,
-    isInitial: true,
     show: (props: IProps) => true
   },
   {
@@ -30,7 +31,14 @@ const pages = [
     icon: Add,
     path: '/add-post',
     component: EditPost,
-    isInitial: false,
+    show: (props: IProps) => props.isAuthenticated
+  },
+  {
+    id: 5,
+    label: 'Profile',
+    icon: AccountCircle,
+    path: '/profile',
+    component: Profile,
     show: (props: IProps) => props.isAuthenticated
   },
   {
@@ -39,7 +47,6 @@ const pages = [
     icon: Add,
     path: `/register`,
     component: Register,
-    isInitial: false,
     show: (props: IProps) => !props.isAuthenticated
   },
   {
@@ -48,7 +55,6 @@ const pages = [
     icon: AccountBox,
     path: `/log-in`,
     component: Auth,
-    isInitial: false,
     show: (props: IProps) => !props.isAuthenticated
   },
 ];

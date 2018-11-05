@@ -14,8 +14,8 @@ const AuthTokenSchema = mongoose.Schema({
     type: Date,
     default: Date.now
   }
-})
+});
 
 const AuthToken = mongoose.model('AuthToken', AuthTokenSchema);
 
-module.exports = AuthToken
+module.exports = AuthToken;

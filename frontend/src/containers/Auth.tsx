@@ -11,11 +11,11 @@ const styles = {
   form: {
     display: 'flex',
     flexDirection: 'column' as 'column',
-    padding: 8,
+    padding: 8
   }
 };
 
-interface IProps extends IMapStateToProps, IMapDispathToProps { }
+interface IProps extends IMapStateToProps, IMapDispathToProps {}
 
 class State {
   readonly login: string = '';
@@ -42,7 +42,12 @@ class Auth extends React.Component<IProps, State> {
           onChange={this.handlePasswordChange}
           type="password"
         />
-        <Button variant="outlined" color="primary" type="submit" disabled={!isFormValid}>
+        <Button
+          variant="outlined"
+          color="primary"
+          type="submit"
+          disabled={!isFormValid}
+        >
           Login
         </Button>
       </form>
@@ -77,7 +82,9 @@ interface IMapDispathToProps {
   onAuth: (authDate: IAuthData) => void;
 }
 
-const mapDispathToProps = (dispatch: (action: any) => void): IMapDispathToProps => {
+const mapDispathToProps = (
+  dispatch: (action: any) => void
+): IMapDispathToProps => {
   return {
     onAuth: authData => dispatch(auth(authData))
   };
