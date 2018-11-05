@@ -8,7 +8,9 @@
     "object-literal-sort-keys": false,
     "ordered-imports": false,
     "no-console": false,
-    "max-classes-per-file": false
+    "max-classes-per-file": false,
+    "quotemark": [true, "single", "jsx-double", "avoid-escape"],
+    "max-line-length": false
   },
   "linterOptions": {
     "exclude": [

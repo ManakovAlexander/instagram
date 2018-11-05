@@ -9,21 +9,23 @@ export class State {
   readonly error: Error | null = null;
 }
 
-export const reducer: Reducer<State, RegisterActions> = (state: State = { ...new State() }, action) => {
+export const reducer: Reducer<State, RegisterActions> = (
+  state: State = { ...new State() },
+  action
+) => {
   if (action.type === 'register/setInProgress') {
     return {
       ...state,
-      inProgress: action.payload,
+      inProgress: action.payload
     };
   }
 
   if (action.type === 'register/setError') {
     return {
       ...state,
-      error: action.payload,
+      error: action.payload
     };
   }
 
   return state;
 };
-

@@ -3,12 +3,15 @@ import { ActionTypes } from '../actions/posts';
 import { Reducer } from 'redux';
 
 export class State {
-  readonly posts: IPost[] = [];
+  readonly posts: ReadonlyArray<IPost> = [];
   readonly inProgress: boolean = false;
   readonly error: Error | null = null;
 }
 
-export const reducer: Reducer<State, ActionTypes> = (state = { ...new State() }, action: ActionTypes) => {
+export const reducer: Reducer<State, ActionTypes> = (
+  state = { ...new State() },
+  action: ActionTypes
+) => {
   if (action.type === 'posts/set') {
     return { ...state, posts: action.payload };
   }
@@ -22,7 +25,10 @@ export const reducer: Reducer<State, ActionTypes> = (state = { ...new State() },
   }
 
   if (action.type === 'posts/delete') {
-    return { ...state, posts: state.posts.filter(post => post._id !== action.payload) };
+    return {
+      ...state,
+      posts: state.posts.filter(post => post._id !== action.payload)
+    };
   }
 
   return state;

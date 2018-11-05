@@ -14,12 +14,13 @@ router.put('', async (req, res, next) => {
     if (!user) {
       throw new Error('Invalid login or password');
     }
-    const authToken = await AuthToken.create({
+    const token = uuidv4()
+    await AuthToken.create({
       _id: new mongoose.Types.ObjectId(),
       userId: user._id,
-      token: uuidv4(),
+      token
     });
-    res.json({ token: authToken._id })
+    res.json({ token });
   } catch (error) {
     next(error);
   }

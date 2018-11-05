@@ -23,11 +23,7 @@ class Post extends React.Component<IProps> {
     return (
       <Card>
         <CardHeader
-          avatar={
-            <Avatar aria-label="Avatar">
-              R
-            </Avatar>
-          }
+          avatar={<Avatar aria-label="Avatar">R</Avatar>}
           action={<PostMenu onDelete={this.handleDelete} />}
           title="Shrimp and Chorizo Paella"
           subheader="September 14, 2016"
@@ -43,9 +39,9 @@ class Post extends React.Component<IProps> {
           <Typography gutterBottom={true} variant="headline" component="h2">
             {post.title}
           </Typography>
-          {
-            post.description && <Typography component="p">{post.description}</Typography>
-          }
+          {post.description && (
+            <Typography component="p">{post.description}</Typography>
+          )}
         </CardContent>
       </Card>
     );

@@ -23,8 +23,16 @@ class Posts extends React.PureComponent<IProps> {
     const posts = this.props.posts;
     return (
       <div style={{ padding: 8 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))', gridGap: 8 }}>
-          {posts.map(post => <Post post={post} key={post._id} onDelete={this.handleDelete} />)}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))',
+            gridGap: 8
+          }}
+        >
+          {posts.map(post => (
+            <Post post={post} key={post._id} onDelete={this.handleDelete} />
+          ))}
         </div>
       </div>
     );
@@ -38,7 +46,7 @@ const mapStateToProps = (store: IStore) => {
 const mapDispatchToProps = (dispatch: (action: any) => void) => {
   return {
     onFetchPosts: () => dispatch(fetchPosts()),
-    onDeletePost: (postId: string) => dispatch(deletePost(postId)),
+    onDeletePost: (postId: string) => dispatch(deletePost(postId))
   };
 };
 

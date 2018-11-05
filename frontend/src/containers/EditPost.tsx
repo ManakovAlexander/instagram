@@ -2,33 +2,34 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { IMedia } from '../models/post';
+import { IMedia } from '../models/media';
 import { IStore } from 'src/reducers';
 import MediaPreview from '../components/MediaPreview';
 import { createPost } from '../actions/edit-post';
 import { State as StoreState } from '../reducers/edit-post';
+import { readFile } from 'src/infrastructure/file';
 
 const styles = {
   form: {
     display: 'flex',
     flexDirection: 'column' as 'column',
-    padding: 8,
+    padding: 8
   },
   imageInput: {
-    display: 'none',
+    display: 'none'
   },
   titleField: {
-    margin: 8,
+    margin: 8
   },
   descriptionField: {
-    margin: 8,
+    margin: 8
   },
   saveButton: {
-    margin: 8,
+    margin: 8
   }
 };
 
-interface IProps extends IMapDispatchToProps, IMapStateToProps { }
+interface IProps extends IMapDispatchToProps, IMapStateToProps {}
 
 class State {
   readonly title: string = '';
@@ -53,9 +54,12 @@ class EditPost extends React.Component<IProps, State> {
           <label htmlFor="file-button">
             <Button variant="outlined" component="span">
               Upload
-              </Button>
+            </Button>
           </label>
-          {this.state.media && this.state.media.map((media, index) => <MediaPreview key={index} media={media} />)}
+          {this.state.media &&
+            this.state.media.map((media, index) => (
+              <MediaPreview key={index} media={media} />
+            ))}
           <TextField
             id="title"
             label="Title"
@@ -77,7 +81,8 @@ class EditPost extends React.Component<IProps, State> {
             color="primary"
             disabled={!this.postIsValid}
             onClick={this.sendPost}
-            style={styles.saveButton}>
+            style={styles.saveButton}
+          >
             Save
           </Button>
         </form>
@@ -85,14 +90,13 @@ class EditPost extends React.Component<IProps, State> {
     );
   }
 
-  handleFileChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    if (!ev.currentTarget.files || !ev.currentTarget.files[0]) {
-      return;
+  handleFileChange = async (ev: React.ChangeEvent<HTMLInputElement>) => {
+    const mediaFile = await readFile(ev);
+    if (mediaFile) {
+      this.setState(({ media }) => ({
+        media: media.concat(mediaFile)
+      }));
     }
-    const file = ev.currentTarget.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => this.setState(({ media }) => ({ media: media.concat({ file, imagePreviewUrl: reader.result as string }) }));
-    reader.readAsDataURL(file);
   }
 
   handleTitleChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
@@ -129,7 +133,11 @@ class EditPost extends React.Component<IProps, State> {
   }
 
   get saveIsDisabled() {
-    return !this.postIsValid || this.props.saveInProgress || this.props.fetchInProgress;
+    return (
+      !this.postIsValid ||
+      this.props.saveInProgress ||
+      this.props.fetchInProgress
+    );
   }
 }
 
@@ -141,9 +149,12 @@ interface IMapDispatchToProps {
   onCreatePosts: (postFormData: FormData) => void;
 }
 
-const mapDispatchToProps = (dispatch: (action: any) => void): IMapDispatchToProps => {
+const mapDispatchToProps = (
+  dispatch: (action: any) => void
+): IMapDispatchToProps => {
   return {
-    onCreatePosts: (postFormData: FormData) => dispatch(createPost(postFormData)),
+    onCreatePosts: (postFormData: FormData) =>
+      dispatch(createPost(postFormData))
   };
 };
 
