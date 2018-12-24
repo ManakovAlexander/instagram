@@ -4,24 +4,34 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
+import { PostMenuDeleteDialog } from './PostMenuDeleteDialog';
+
 interface IProps {
   onDelete: () => void;
 }
 
 class State {
   anchorEl: Element | null = null;
+  showDeleteDialog = false;
 }
 
 export class PostMenu extends React.PureComponent<IProps, State> {
   state = new State();
 
-  handleClick = (event: React.MouseEvent) => {
+  handleMenuClick = (event: React.MouseEvent) => {
     this.setState({ anchorEl: event.currentTarget });
   }
 
-  handleDelete = () => {
-    this.props.onDelete();
+  handleDeleteMenuItemClicked = () => {
     this.handleClose();
+    this.setState({ showDeleteDialog: true });
+  }
+
+  handleDeleteDialogResponse = (shouldDelete: boolean) => {
+    this.setState({ showDeleteDialog: false });
+    if (shouldDelete) {
+      this.props.onDelete();
+    }
   }
 
   handleClose = () => {
@@ -38,7 +48,7 @@ export class PostMenu extends React.PureComponent<IProps, State> {
           aria-label="More"
           aria-owns={open ? 'long-menu' : undefined}
           aria-haspopup="true"
-          onClick={this.handleClick}
+          onClick={this.handleMenuClick}
         >
           <MoreVertIcon />
         </IconButton>
@@ -48,8 +58,9 @@ export class PostMenu extends React.PureComponent<IProps, State> {
           open={open}
           onClose={this.handleClose}
         >
-          <MenuItem onClick={this.handleDelete}>delete</MenuItem>
+          <MenuItem onClick={this.handleDeleteMenuItemClicked}>delete</MenuItem>
         </Menu>
+        <PostMenuDeleteDialog open={this.state.showDeleteDialog} onClose={this.handleDeleteDialogResponse} />
       </div>
     );
   }
