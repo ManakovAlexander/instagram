@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Dialog, DialogTitle, DialogActions, Button } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogActions, Button, DialogContent, DialogContentText } from '@material-ui/core';
 
 interface IProps {
   open: boolean;
@@ -20,7 +20,9 @@ export class PostMenuDeleteDialog extends React.PureComponent<IProps> {
     return (
       <Dialog {...other}>
         <DialogTitle>Delete post</DialogTitle>
-        <p>Are you sure you want to delete this post?</p>
+        <DialogContent>
+          <DialogContentText>Are you sure you want to delete this post?</DialogContentText>
+        </DialogContent>
         <DialogActions>
           <Button onClick={this.handleCancel} color="primary">
             Cancel

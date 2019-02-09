@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IPost } from 'src/models/post';
+import { IPostView } from 'src/models/post';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -9,7 +9,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { PostMenu } from './PostMenu';
 
 interface IProps {
-  post: IPost;
+  post: IPostView;
   onDelete: (id: string) => void;
 }
 
@@ -23,10 +23,10 @@ class Post extends React.Component<IProps> {
     return (
       <Card>
         <CardHeader
-          avatar={<Avatar aria-label="Avatar">R</Avatar>}
+          avatar={<Avatar aria-label="Avatar" src={`http://localhost:1337/files/${post.user.avatarId}`} />}
           action={<PostMenu onDelete={this.handleDelete} />}
-          title="Shrimp and Chorizo Paella"
-          subheader="September 14, 2016"
+          title={post.user.name}
+          subheader={post.created.toString()}
         />
         <CardMedia
           style={{

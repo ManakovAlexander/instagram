@@ -5,10 +5,14 @@ interface IProps {
   media: IMedia;
 }
 
+const style = {
+  maxWidth: '100%'
+};
+
 class MediaPreview extends React.Component<IProps> {
   render() {
     const media = this.props.media;
-    return <img src={media.imagePreviewUrl} width="300" />;
+    return <img src={media.imagePreviewUrl} style={style} />;
   }
 }
 

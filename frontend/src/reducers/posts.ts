@@ -1,9 +1,9 @@
-import { IPost } from '../models/post';
+import { IPostView } from '../models/post';
 import { ActionTypes } from '../actions/posts';
 import { Reducer } from 'redux';
 
 export class State {
-  readonly posts: ReadonlyArray<IPost> = [];
+  readonly posts: ReadonlyArray<IPostView> = [];
   readonly inProgress: boolean = false;
   readonly error: Error | null = null;
 }

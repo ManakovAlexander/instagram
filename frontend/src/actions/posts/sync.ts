@@ -1,9 +1,9 @@
 import { createAction } from 'typesafe-actions';
 
-import { IPost } from '../../models/post';
+import { IPostView } from '../../models/post';
 
 export const setPostsAction = createAction('posts/set', resolve => {
-  return (posts: IPost[]) => resolve(posts);
+  return (posts: IPostView[]) => resolve(posts);
 });
 
 export const setPostsInProgressAction = createAction('posts/setInProgress', resolve => {
