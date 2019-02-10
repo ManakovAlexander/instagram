@@ -3,17 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^3.0.0",
-    "@material-ui/icons": "^3.0.1",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
-    "react-redux": "^5.0.7",
-    "react-responsive-carousel": "^3.1.41",
+    "@material-ui/core": "^3.9.2",
+    "@material-ui/icons": "^3.0.2",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
+    "react-redux": "^6.0.0",
+    "react-responsive-carousel": "^3.1.46",
     "react-router-dom": "^4.3.1",
-    "react-scripts-ts": "2.17.0",
-    "redux": "^4.0.0",
+    "react-scripts-ts": "3.1.0",
+    "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "typesafe-actions": "^2.0.4"
+    "typesafe-actions": "^3.0.0"
   },
   "scripts": {
     "start": "react-scripts-ts start",
@@ -22,16 +22,16 @@
     "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.1",
-    "@types/node": "^10.5.8",
-    "@types/react": "^16.4.9",
-    "@types/react-dom": "^16.0.7",
-    "@types/react-redux": "^6.0.6",
+    "@types/jest": "^24.0.0",
+    "@types/node": "^10.12.24",
+    "@types/react": "^16.8.2",
+    "@types/react-dom": "^16.8.0",
+    "@types/react-redux": "^7.0.1",
     "@types/react-router-dom": "^4.3.0",
     "@types/redux": "^3.6.0",
-    "redux-devtools": "^3.4.1",
-    "redux-devtools-extension": "^2.13.5",
-    "tslint": "^5.11.0",
-    "typescript": "^3.0.1"
+    "redux-devtools": "^3.5.0",
+    "redux-devtools-extension": "^2.13.8",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3"
   }
 }
