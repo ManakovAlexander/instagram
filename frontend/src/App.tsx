@@ -70,12 +70,14 @@ class App extends React.Component<IProps> {
     const filteredPages = pages.filter(page => (page.show ? page.show(this.props) : true));
     return (
       <div className="App">
-        <Switch>
-          {filteredPages.map(page => (
-            <Route path={page.path} exact={true} key={page.id} component={page.component} />
-          ))}
-          <Redirect to={pages[0].path} />
-        </Switch>
+        <div className="content">
+          <Switch>
+            {filteredPages.map(page => (
+              <Route path={page.path} exact={true} key={page.id} component={page.component} />
+            ))}
+            <Redirect to={pages[0].path} />
+          </Switch>
+        </div>
         <Footer pages={filteredPages} activePageId={activePageId} />
       </div>
     );

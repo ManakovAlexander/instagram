@@ -5,13 +5,6 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 
 import { IPage } from '../models/index';
 
-const style = {
-  bottomNavigation: {
-    position: 'sticky' as 'sticky',
-    bottom: -1
-  }
-};
-
 interface IProps {
   pages: IPage[];
   activePageId: number | null;
@@ -24,7 +17,6 @@ class Footer extends React.PureComponent<IProps> {
       <BottomNavigation
         value={activePageId}
         showLabels={true}
-        style={style.bottomNavigation}
       >
         {pages.map(page => (
           <BottomNavigationAction
