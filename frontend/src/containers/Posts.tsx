@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import Post from 'src/components/Post';
-import { IStore } from 'src/reducers';
-import { fetchPosts, deletePost } from 'src/actions/posts';
-import { State as PostsState } from 'src/reducers/posts';
+import Post from '../components/Post';
+import { IStore } from '../reducers';
+import { fetchPosts, deletePost } from '../actions/posts';
+import { State as PostsState } from '../reducers/posts';
 
 interface IProps extends PostsState {
   onFetchPosts: () => void;

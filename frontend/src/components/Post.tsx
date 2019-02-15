@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IPostView } from 'src/models/post';
+import { IPostView } from '../models/post';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';

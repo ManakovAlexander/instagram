@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { IStore } from 'src/reducers';
-import { fetchCurrentUser, updateAvatar } from 'src/actions/profile';
-import { State as ProfileState } from 'src/reducers/profile';
-import Profile from 'src/components/Profile';
-import { IMedia } from 'src/models/media';
+import { IStore } from '../../reducers';
+import { fetchCurrentUser, updateAvatar } from '../../actions/profile';
+import { State as ProfileState } from '../../reducers/profile';
+import { IMedia } from '../../models/media';
+
+import Avatar from './Avatar';
+import EditProfile from './EditProfile';
 
 interface IProps extends IMapStateToProps, IMapDispatchToProps {}
 
@@ -15,21 +17,20 @@ class State {
 
 class Page extends React.PureComponent<IProps, State> {
   readonly state = new State();
+
   componentDidMount() {
     this.props.fetchCurrentUser();
   }
 
   render() {
     const { currentUser } = this.props;
+    if (!currentUser) {
+      return <div />;
+    }
     return (
       <div>
-        {currentUser ? (
-          <Profile
-            avatarId={currentUser.avatarId}
-            name={currentUser.name}
-            updateAvatar={this.handleUpdateAvatar}
-          />
-        ) : null}
+        <Avatar avatarId={currentUser.avatarId} name={currentUser.name} updateAvatar={this.handleUpdateAvatar} />
+        <EditProfile profile={currentUser} />
       </div>
     );
   }
@@ -52,9 +53,7 @@ interface IMapDispatchToProps {
   updateAvatar: (fromData: FormData) => void;
 }
 
-const mapDispatchToProps = (
-  dispatch: (action: any) => void
-): IMapDispatchToProps => {
+const mapDispatchToProps = (dispatch: (action: any) => void): IMapDispatchToProps => {
   return {
     fetchCurrentUser: () => dispatch(fetchCurrentUser()),
     updateAvatar: formData => dispatch(updateAvatar(formData))

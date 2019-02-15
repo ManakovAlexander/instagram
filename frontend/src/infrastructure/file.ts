@@ -1,4 +1,4 @@
-import { IMedia } from 'src/models/media';
+import { IMedia } from '../models/media';
 
 export const readFile = async (
   ev: React.ChangeEvent<HTMLInputElement>

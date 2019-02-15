@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IMedia } from 'src/models/media';
+import { IMedia } from '../models/media';
 
 interface IProps {
   media: IMedia;

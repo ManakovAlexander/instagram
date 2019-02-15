@@ -15,6 +15,17 @@ router.get('', auth, async (req, res, next) => {
   }
 });
 
+router.post('/:id', auth, async (req, res, next) => {
+  try {
+    if (req.params.id !== req.authToken.userId) {
+      throw new Error('Cannot edit another user.');
+    }
+    await User.updateOne({ _id: req.authToken.userId }, { $set: req.body }).exec();
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.post('/avatar', auth, upload.single('avatar'), async (req, res, next) => {
   try {
     const { filename } = req.file;

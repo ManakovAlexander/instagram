@@ -2,8 +2,8 @@ import * as React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import { PhotoCamera } from '@material-ui/icons';
 
-import { IMedia } from 'src/models/media';
-import { readFile } from 'src/infrastructure/file';
+import { IMedia } from '../../models/media';
+import { readFile } from '../../infrastructure/file';
 
 const styles = {
   avatarContainer: {
@@ -40,7 +40,7 @@ interface IProps {
   updateAvatar: (media: IMedia) => void;
 }
 
-export default class Profile extends React.PureComponent<IProps> {
+export default class extends React.PureComponent<IProps> {
   render() {
     const { avatarId } = this.props;
     return (

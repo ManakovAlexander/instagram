@@ -2,7 +2,7 @@ import { ActionType } from 'typesafe-actions';
 import { Dispatch } from 'redux';
 
 import * as actions from './sync';
-import { currentUserRequests, updateAvatarRequest } from 'src/requests/profile';
+import { currentUserRequests, updateAvatarRequest } from '../../requests/profile';
 
 export type ActionTypes = ActionType<typeof actions>;
 
