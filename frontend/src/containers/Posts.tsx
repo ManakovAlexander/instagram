@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import Post from '../components/Post';
+import Post from '../modules/post';
 import { IStore } from '../reducers';
 import { fetchPosts, deletePost } from '../actions/posts';
 import { State as PostsState } from '../reducers/posts';

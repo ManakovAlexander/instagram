@@ -6,7 +6,7 @@ interface IProps {
   onClose: (shouldDelete: boolean) => void;
 }
 
-export class PostMenuDeleteDialog extends React.PureComponent<IProps> {
+export default class PostMenuDeleteDialog extends React.PureComponent<IProps> {
   handleCancel = () => {
     this.props.onClose(false);
   }
