@@ -7,6 +7,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 
 import PostMenu from './PostMenu';
+import DateFormatter from '../../components/DateFormatter';
 import { IPostView } from '../../models/post';
 
 interface IProps {
@@ -27,7 +28,7 @@ export default class Post extends React.PureComponent<IProps> {
           avatar={<Avatar aria-label="Avatar" src={`http://localhost:1337/files/${post.user.avatarId}`} />}
           action={<PostMenu onDelete={this.handleDelete} />}
           title={post.user.name}
-          subheader={post.created.toString()}
+          subheader={<DateFormatter format="d mmm in H:MM">{post.created}</DateFormatter>}
         />
         <CardMedia
           style={{
