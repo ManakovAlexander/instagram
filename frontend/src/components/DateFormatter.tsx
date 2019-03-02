@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as dateformat from 'dateformat';
+import dateformat from 'dateformat';
 
 interface IProps {
   format: string;

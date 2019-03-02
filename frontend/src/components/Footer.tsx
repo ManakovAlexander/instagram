@@ -20,7 +20,7 @@ class Footer extends React.PureComponent<IProps> {
       >
         {pages.map(page => (
           <BottomNavigationAction
-            component={Link}
+            component={Link as any}
             {...{ to: page.path }}
             label={page.label}
             icon={<page.icon />}
