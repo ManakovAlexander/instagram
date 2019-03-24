@@ -2,10 +2,10 @@ import * as React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import { register } from '../actions/register/index';
-import { IRegisterData } from '../models/register';
-import { State as StoreState } from '../reducers/register';
-import { IStore } from '../reducers';
+import { register } from '../../actions/register/index';
+import { IRegisterData } from '../../models/register';
+import { State as StoreState } from '../../reducers/register';
+import { IStore } from '../../reducers';
 import { Redirect } from 'react-router';
 
 const styles = {

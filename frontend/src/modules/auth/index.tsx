@@ -1,11 +1,11 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { State as StoreState } from '../reducers/auth';
-import { IStore } from '../reducers';
-import { IAuthData } from '../models/auth';
-import { connect } from 'react-redux';
-import { auth } from '../actions/auth';
+import { State as StoreState } from '../../reducers/auth';
+import { IStore } from '../../reducers';
+import { IAuthData } from '../../models/auth';
+import { auth } from '../../actions/auth';
 
 const styles = {
   form: {
