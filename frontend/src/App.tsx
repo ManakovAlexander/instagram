@@ -12,7 +12,7 @@ import EditPost from './containers/EditPost';
 import Posts from './containers/Posts';
 import Footer from './components/Footer';
 import Register from './containers/Register';
-import Auth from './containers/Auth';
+import Auth from './modules/auth';
 import Profile from './modules/profile';
 
 import store from './store';
