@@ -11,7 +11,7 @@ import { Provider } from 'react-redux';
 import EditPost from './modules/posts/EditPost';
 import Posts from './modules/posts';
 import Footer from './components/Footer';
-import Register from './containers/Register';
+import Register from './modules/register/Register';
 import Auth from './modules/auth';
 import Profile from './modules/profile';
 
