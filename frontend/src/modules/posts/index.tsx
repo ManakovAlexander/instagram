@@ -1,13 +1,24 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import Post from '../modules/post';
-import { IStore } from '../reducers';
-import { fetchPosts, deletePost } from '../actions/posts';
-import { State as PostsState } from '../reducers/posts';
+import Post from './post';
+import { IStore } from '../../reducers';
+import { fetchPosts, deletePost } from '../../actions/posts';
+import { State as PostsState } from '../../reducers/posts';
 
 interface IProps extends PostsState {
   onFetchPosts: () => void;
   onDeletePost: (postId: string) => void;
+}
+
+const styles = {
+  postsContainer: {
+    padding: 8
+  },
+  postsGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))',
+    gridGap: 8
+  }
 }
 
 class Posts extends React.PureComponent<IProps> {
@@ -22,13 +33,9 @@ class Posts extends React.PureComponent<IProps> {
   render() {
     const posts = this.props.posts;
     return (
-      <div style={{ padding: 8 }}>
+      <div style={styles.postsContainer}>
         <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))',
-            gridGap: 8
-          }}
+          style={styles.postsGrid}
         >
           {posts.map(post => (
             <Post post={post} key={post._id} onDelete={this.handleDelete} />

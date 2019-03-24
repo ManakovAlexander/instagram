@@ -8,8 +8,8 @@ import { IStore } from './reducers';
 import { IPage } from './models';
 import { Provider } from 'react-redux';
 
-import EditPost from './containers/EditPost';
-import Posts from './containers/Posts';
+import EditPost from './modules/posts/EditPost';
+import Posts from './modules/posts';
 import Footer from './components/Footer';
 import Register from './containers/Register';
 import Auth from './modules/auth';

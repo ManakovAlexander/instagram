@@ -2,12 +2,12 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { IMedia } from '../models/media';
-import { IStore } from '../reducers';
-import MediaPreview from '../components/MediaPreview';
-import { createPost } from '../actions/edit-post';
-import { State as StoreState } from '../reducers/edit-post';
-import { readFile } from '../infrastructure/file';
+import { IMedia } from '../../models/media';
+import { IStore } from '../../reducers';
+import MediaPreview from '../../components/MediaPreview';
+import { createPost } from '../../actions/edit-post';
+import { State as StoreState } from '../../reducers/edit-post';
+import { readFile } from '../../infrastructure/file';
 
 const styles = {
   form: {
