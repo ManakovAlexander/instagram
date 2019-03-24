@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Home, Add, AccountBox, AccountCircle } from '@material-ui/icons';
 import { Switch, Route, withRouter, Redirect, BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
