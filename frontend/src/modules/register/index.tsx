@@ -18,12 +18,6 @@ const styles = {
 
 interface IProps extends IMapStateToProps, IMapDispatchToProps {}
 
-class State {
-  readonly login: string = '';
-  readonly password: string = '';
-  readonly name: string = '';
-}
-
 const Register: FunctionComponent<IProps> = props => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
