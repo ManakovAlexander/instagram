@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -8,138 +8,77 @@ import MediaPreview from '../../components/MediaPreview';
 import { createPost } from '../../actions/edit-post';
 import { State as StoreState } from '../../reducers/edit-post';
 import { readFile } from '../../infrastructure/file';
-
-const styles = {
-  form: {
-    display: 'flex',
-    flexDirection: 'column' as 'column',
-    padding: 8
-  },
-  imageInput: {
-    display: 'none'
-  },
-  titleField: {
-    margin: 8
-  },
-  descriptionField: {
-    margin: 8
-  },
-  saveButton: {
-    margin: 8
-  }
-};
+import styles from './EditPost.module.css';
 
 interface IProps extends IMapDispatchToProps, IMapStateToProps {}
 
-class State {
-  readonly title: string = '';
-  readonly description: string = '';
-  readonly media: IMedia[] = [];
-}
+const EditPost: FunctionComponent<IProps> = props => {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [media, setMedia] = useState<IMedia[]>([]);
 
-class EditPost extends React.Component<IProps, State> {
-  readonly state = new State();
-
-  render() {
-    return (
-      <div>
-        <form style={styles.form}>
-          <input
-            accept="image/*"
-            style={styles.imageInput}
-            id="file-button"
-            type="file"
-            onChange={this.handleFileChange}
-          />
-          <label htmlFor="file-button">
-            <Button variant="outlined" component="span">
-              Upload
-            </Button>
-          </label>
-          {this.state.media &&
-            this.state.media.map((media, index) => (
-              <MediaPreview key={index} media={media} />
-            ))}
-          <TextField
-            id="title"
-            label="Title"
-            value={this.state.title}
-            onChange={this.handleTitleChange}
-            required={true}
-            style={styles.titleField}
-          />
-          <TextField
-            id="description"
-            label="Description"
-            value={this.state.description}
-            onChange={this.handleDescriptionChange}
-            multiline={true}
-            style={styles.descriptionField}
-          />
-          <Button
-            variant="outlined"
-            color="primary"
-            disabled={!this.postIsValid}
-            onClick={this.sendPost}
-            style={styles.saveButton}
-          >
-            Save
-          </Button>
-        </form>
-      </div>
-    );
-  }
-
-  handleFileChange = async (ev: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (ev: React.ChangeEvent<HTMLInputElement>) => {
     const mediaFile = await readFile(ev);
     if (mediaFile) {
-      this.setState(({ media }) => ({
-        media: media.concat(mediaFile)
-      }));
+      setMedia(media.concat(mediaFile));
     }
-  }
+  };
 
-  handleTitleChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
-    this.setState({ title: ev.target.value });
-  }
+  const handleTitleChange = (ev: React.ChangeEvent<HTMLInputElement>) => setTitle(ev.target.value);
 
-  handleDescriptionChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
-    this.setState({ description: ev.target.value });
-  }
+  const handleDescriptionChange = (ev: React.ChangeEvent<HTMLInputElement>) => setDescription(ev.target.value);
 
-  sendPost = () => {
-    if (!this.postIsValid) {
+  const postIsValid = media.length > 0 && !!title;
+
+  const saveIsDisabled = !postIsValid || props.saveInProgress || props.fetchInProgress;
+
+  const sendPost = () => {
+    if (!postIsValid) {
       return;
     }
 
     const postFormData = new FormData();
-    if (this.state.media && this.state.media.length > 0) {
-      this.state.media.forEach(media => {
-        postFormData.append('media', media.file);
+    if (media && media.length > 0) {
+      media.forEach(m => {
+        postFormData.append('media', m.file);
       });
     }
-    if (this.state.title) {
-      postFormData.append('title', this.state.title);
+    if (title) {
+      postFormData.append('title', title);
     }
-    if (this.state.description) {
-      postFormData.append('description', this.state.description);
+    if (description) {
+      postFormData.append('description', description);
     }
 
-    this.props.onCreatePosts(postFormData);
-  }
+    props.onCreatePosts(postFormData);
+  };
 
-  get postIsValid() {
-    return this.state.media.length > 0 && !!this.state.title;
-  }
-
-  get saveIsDisabled() {
-    return (
-      !this.postIsValid ||
-      this.props.saveInProgress ||
-      this.props.fetchInProgress
-    );
-  }
-}
+  return (
+    <div>
+      <form className={styles.form}>
+        <input accept="image/*" className={styles.image_input} id="file-button" type="file" onChange={handleFileChange} />
+        <label htmlFor="file-button">
+          <Button variant="outlined" component="span">
+            Upload
+          </Button>
+        </label>
+        {media && media.map((m, index) => <MediaPreview key={index} media={m} />)}
+        <TextField id="title" label="Title" value={title} onChange={handleTitleChange} required={true} className={styles.title_field} />
+        <TextField
+          id="description"
+          label="Description"
+          value={description}
+          onChange={handleDescriptionChange}
+          multiline={true}
+          className={styles.description_field}
+        />
+        <Button variant="outlined" color="primary" disabled={saveIsDisabled} onClick={sendPost} className={styles.save_button}>
+          Save
+        </Button>
+      </form>
+    </div>
+  );
+};
 
 type IMapStateToProps = StoreState;
 
@@ -149,12 +88,9 @@ interface IMapDispatchToProps {
   onCreatePosts: (postFormData: FormData) => void;
 }
 
-const mapDispatchToProps = (
-  dispatch: (action: any) => void
-): IMapDispatchToProps => {
+const mapDispatchToProps = (dispatch: (action: any) => void): IMapDispatchToProps => {
   return {
-    onCreatePosts: (postFormData: FormData) =>
-      dispatch(createPost(postFormData))
+    onCreatePosts: (postFormData: FormData) => dispatch(createPost(postFormData))
   };
 };
 

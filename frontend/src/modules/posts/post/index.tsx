@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -15,35 +15,31 @@ interface IProps {
   onDelete: (id: string) => void;
 }
 
-export default class Post extends React.PureComponent<IProps> {
-  handleDelete = () => {
-    this.props.onDelete(this.props.post._id);
-  }
+const Post: FunctionComponent<IProps> = ({ post, onDelete }) => {
+  const handleDelete = () => onDelete(post._id);
+  return (
+    <Card>
+      <CardHeader
+        avatar={<Avatar aria-label="Avatar" src={`http://localhost:1337/files/${post.user.avatarId}`} />}
+        action={<PostMenu onDelete={handleDelete} />}
+        title={post.user.name}
+        subheader={<DateFormatter format="d mmm in H:MM">{post.created}</DateFormatter>}
+      />
+      <CardMedia
+        style={{
+          height: 0,
+          paddingTop: '56.25%'
+        }}
+        image={`http://localhost:1337/files/${post.media[0]}`}
+      />
+      <CardContent>
+        <Typography gutterBottom={true} variant="headline" component="h2">
+          {post.title}
+        </Typography>
+        {post.description && <Typography component="p">{post.description}</Typography>}
+      </CardContent>
+    </Card>
+  );
+};
 
-  render() {
-    const post = this.props.post;
-    return (
-      <Card>
-        <CardHeader
-          avatar={<Avatar aria-label="Avatar" src={`http://localhost:1337/files/${post.user.avatarId}`} />}
-          action={<PostMenu onDelete={this.handleDelete} />}
-          title={post.user.name}
-          subheader={<DateFormatter format="d mmm in H:MM">{post.created}</DateFormatter>}
-        />
-        <CardMedia
-          style={{
-            height: 0,
-            paddingTop: '56.25%'
-          }}
-          image={`http://localhost:1337/files/${post.media[0]}`}
-        />
-        <CardContent>
-          <Typography gutterBottom={true} variant="headline" component="h2">
-            {post.title}
-          </Typography>
-          {post.description && <Typography component="p">{post.description}</Typography>}
-        </CardContent>
-      </Card>
-    );
-  }
-}
+export default Post;
