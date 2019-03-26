@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { IMedia } from '../models/media';
 
 interface IProps {
@@ -9,11 +9,6 @@ const style = {
   maxWidth: '100%'
 };
 
-class MediaPreview extends React.Component<IProps> {
-  render() {
-    const media = this.props.media;
-    return <img src={media.imagePreviewUrl} style={style} />;
-  }
-}
+const MediaPreview: FunctionComponent<IProps> = ({ media }) => <img src={media.imagePreviewUrl} style={style} />;
 
-export default MediaPreview;
+export default React.memo<IProps>(MediaPreview);

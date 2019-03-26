@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Dialog, DialogTitle, DialogActions, Button, DialogContent, DialogContentText } from '@material-ui/core';
 
 interface IProps {
@@ -6,32 +6,26 @@ interface IProps {
   onClose: (shouldDelete: boolean) => void;
 }
 
-export default class PostMenuDeleteDialog extends React.PureComponent<IProps> {
-  handleCancel = () => {
-    this.props.onClose(false);
-  }
+const PostMenuDeleteDialog: FunctionComponent<IProps> = props => {
+  const { onClose, ...other } = props;
+  const handleCancel = () => onClose(false);
+  const handleDelete = () => onClose(true);
+  return (
+    <Dialog {...other}>
+      <DialogTitle>Delete post</DialogTitle>
+      <DialogContent>
+        <DialogContentText>Are you sure you want to delete this post?</DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleCancel} color="primary">
+          Cancel
+        </Button>
+        <Button onClick={handleDelete} color="primary">
+          Delete
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
 
-  handleDelete = () => {
-    this.props.onClose(true);
-  }
-
-  render() {
-    const { onClose, ...other } = this.props;
-    return (
-      <Dialog {...other}>
-        <DialogTitle>Delete post</DialogTitle>
-        <DialogContent>
-          <DialogContentText>Are you sure you want to delete this post?</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={this.handleCancel} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={this.handleDelete} color="primary">
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
-  }
-}
+export default PostMenuDeleteDialog;

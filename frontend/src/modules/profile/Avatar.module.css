@@ -1,0 +1,30 @@
+.avatar_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 250px;
+  background-color: #3c8dd4;
+}
+
+.avatar_wrapper {
+  position: relative;
+}
+
+.avatar {
+  width: 150px;
+  border-radius: 50%;
+  border: 4px solid white;
+}
+
+.form {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #3c8dd4;
+  border: 4px solid white;
+  border-radius: 50%;
+}
+
+.image_input {
+  display: none;
+}

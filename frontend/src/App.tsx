@@ -8,12 +8,13 @@ import { IStore } from './reducers';
 import { IPage } from './models';
 import { Provider } from 'react-redux';
 
-import EditPost from './modules/posts/EditPost';
 import Posts from './modules/posts';
-import Footer from './components/Footer';
-import Register from './modules/register/Register';
-import Auth from './modules/auth';
+import EditPost from './modules/posts/EditPost';
 import Profile from './modules/profile';
+import Register from './modules/register';
+import Auth from './modules/auth';
+
+import Footer from './components/Footer';
 
 import store from './store';
 

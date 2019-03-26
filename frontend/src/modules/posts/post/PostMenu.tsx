@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -10,48 +10,39 @@ interface IProps {
   onDelete: () => void;
 }
 
-class State {
-  anchorEl: Element | null = null;
-  showDeleteDialog = false;
-}
+const PostMenu: FunctionComponent<IProps> = props => {
+  const [anchorEl, setAnchorEl] = useState<Element | null>(null);
+  const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
 
-export default class PostMenu extends React.PureComponent<IProps, State> {
-  state = new State();
+  const handleMenuClick = (event: React.MouseEvent) => setAnchorEl(event.currentTarget);
 
-  handleMenuClick = (event: React.MouseEvent) => {
-    this.setState({ anchorEl: event.currentTarget });
-  }
+  const handleDeleteMenuItemClicked = () => {
+    handleClose();
+    setShowDeleteDialog(true);
+  };
 
-  handleDeleteMenuItemClicked = () => {
-    this.handleClose();
-    this.setState({ showDeleteDialog: true });
-  }
-
-  handleDeleteDialogResponse = (shouldDelete: boolean) => {
-    this.setState({ showDeleteDialog: false });
+  const handleDeleteDialogResponse = (shouldDelete: boolean) => {
+    setShowDeleteDialog(false);
     if (shouldDelete) {
-      this.props.onDelete();
+      props.onDelete();
     }
-  }
+  };
 
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  }
+  const handleClose = () => setAnchorEl(null);
 
-  render() {
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
+  const open = Boolean(anchorEl);
 
-    return (
-      <div>
-        <IconButton aria-label="More" aria-owns={open ? 'long-menu' : undefined} aria-haspopup="true" onClick={this.handleMenuClick}>
-          <MoreVertIcon />
-        </IconButton>
-        <Menu id="long-menu" anchorEl={anchorEl as HTMLElement} open={open} onClose={this.handleClose}>
-          <MenuItem onClick={this.handleDeleteMenuItemClicked}>delete</MenuItem>
-        </Menu>
-        <PostMenuDeleteDialog open={this.state.showDeleteDialog} onClose={this.handleDeleteDialogResponse} />
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <IconButton aria-label="More" aria-owns={open ? 'long-menu' : undefined} aria-haspopup="true" onClick={handleMenuClick}>
+        <MoreVertIcon />
+      </IconButton>
+      <Menu id="long-menu" anchorEl={anchorEl as HTMLElement} open={open} onClose={handleClose}>
+        <MenuItem onClick={handleDeleteMenuItemClicked}>delete</MenuItem>
+      </Menu>
+      <PostMenuDeleteDialog open={showDeleteDialog} onClose={handleDeleteDialogResponse} />
+    </div>
+  );
+};
+
+export default PostMenu;

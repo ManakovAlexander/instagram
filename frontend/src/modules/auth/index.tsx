@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -6,73 +6,34 @@ import { State as StoreState } from '../../reducers/auth';
 import { IStore } from '../../reducers';
 import { IAuthData } from '../../models/auth';
 import { auth } from '../../actions/auth';
-
-const styles = {
-  form: {
-    display: 'flex',
-    flexDirection: 'column' as 'column',
-    padding: 8
-  }
-};
+import styles from './index.module.css';
 
 interface IProps extends IMapStateToProps, IMapDispathToProps {}
 
-class State {
-  readonly login: string = '';
-  readonly password: string = '';
-}
+const Auth: FunctionComponent<IProps> = props => {
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
 
-class Auth extends React.Component<IProps, State> {
-  readonly state = new State();
+  const handleLoginChange = (ev: React.ChangeEvent<HTMLInputElement>) => setLogin(ev.currentTarget.value);
 
-  render() {
-    const isFormValid = this.isFormValid();
-    return (
-      <form onSubmit={this.handleSubmit} style={styles.form}>
-        <TextField
-          required={true}
-          label="login"
-          margin="normal"
-          onChange={this.handleLoginChange}
-        />
-        <TextField
-          required={true}
-          label="password"
-          margin="normal"
-          onChange={this.handlePasswordChange}
-          type="password"
-        />
-        <Button
-          variant="outlined"
-          color="primary"
-          type="submit"
-          disabled={!isFormValid}
-        >
-          Login
-        </Button>
-      </form>
-    );
-  }
+  const handlePasswordChange = (ev: React.ChangeEvent<HTMLInputElement>) => setPassword(ev.currentTarget.value);
 
-  handleLoginChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ login: ev.currentTarget.value });
-  }
-
-  handlePasswordChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ password: ev.currentTarget.value });
-  }
-
-  handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    const { login, password } = this.state;
-    this.props.onAuth({ login, password });
-  }
+    props.onAuth({ login, password });
+  };
 
-  isFormValid = (): boolean => {
-    const { login, password } = this.state;
-    return !!login && !!password;
-  }
-}
+  const isFormValid = !!login && !!password;
+  return (
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <TextField required={true} label="login" margin="normal" onChange={handleLoginChange} />
+      <TextField required={true} label="password" margin="normal" onChange={handlePasswordChange} type="password" />
+      <Button variant="outlined" color="primary" type="submit" disabled={!isFormValid}>
+        Login
+      </Button>
+    </form>
+  );
+};
 
 type IMapStateToProps = StoreState;
 
@@ -82,9 +43,7 @@ interface IMapDispathToProps {
   onAuth: (authDate: IAuthData) => void;
 }
 
-const mapDispathToProps = (
-  dispatch: (action: any) => void
-): IMapDispathToProps => {
+const mapDispathToProps = (dispatch: (action: any) => void): IMapDispathToProps => {
   return {
     onAuth: authData => dispatch(auth(authData))
   };

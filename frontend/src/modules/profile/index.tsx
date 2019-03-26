@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { IStore } from '../../reducers';
@@ -11,36 +11,28 @@ import EditProfile from './EditProfile';
 
 interface IProps extends IMapStateToProps, IMapDispatchToProps {}
 
-class State {
-  readonly newAvatar: IMedia | null = null;
-}
+const Page: FunctionComponent<IProps> = props => {
+  useEffect(() => {
+    props.fetchCurrentUser();
+  }, []);
 
-class Page extends React.PureComponent<IProps, State> {
-  readonly state = new State();
-
-  componentDidMount() {
-    this.props.fetchCurrentUser();
-  }
-
-  render() {
-    const { currentUser } = this.props;
-    if (!currentUser) {
-      return <div />;
-    }
-    return (
-      <div>
-        <Avatar avatarId={currentUser.avatarId} name={currentUser.name} updateAvatar={this.handleUpdateAvatar} />
-        <EditProfile profile={currentUser} />
-      </div>
-    );
-  }
-
-  handleUpdateAvatar = (media: IMedia) => {
+  function handleUpdateAvatar(media: IMedia) {
     const formData = new FormData();
     formData.append('avatar', media.file);
-    this.props.updateAvatar(formData);
+    props.updateAvatar(formData);
   }
-}
+
+  const { currentUser } = props;
+  if (!currentUser) {
+    return <div />;
+  }
+  return (
+    <div>
+      <Avatar avatarId={currentUser.avatarId} updateAvatar={handleUpdateAvatar} />
+      <EditProfile profile={currentUser} />
+    </div>
+  );
+};
 
 interface IMapStateToProps extends ProfileState {}
 

@@ -1,0 +1,21 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+}
+
+.image_input {
+  display: none;
+}
+
+.title_field {
+  margin: 8px;
+}
+
+.description_field {
+  margin: 8px;
+}
+
+.save_button {
+  margin: 8px;
+}

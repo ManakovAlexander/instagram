@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import dateformat from 'dateformat';
 
 interface IProps {
@@ -6,10 +6,10 @@ interface IProps {
   children: string;
 }
 
-function DateFormatter({ format, children }: IProps) {
+const DateFormatter: FunctionComponent<IProps> = ({ format, children }) => {
   const formattedDate = dateformat(children, format);
   return <>{formattedDate}</>;
-}
+};
 
 DateFormatter.defaultProps = {
   format: 'default'
