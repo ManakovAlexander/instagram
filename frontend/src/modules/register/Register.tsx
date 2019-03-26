@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
@@ -24,70 +24,39 @@ class State {
   readonly name: string = '';
 }
 
-class Register extends React.Component<IProps, State> {
-  readonly state = new State();
+const Register: FunctionComponent<IProps> = props => {
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
 
-  render() {
-    if (this.props.token) {
-      return <Redirect to="/posts" />;
-    }
-    const isFormValid = this.isFormValid();
-    return (
-      <form onSubmit={this.handleSubmit} style={styles.form}>
-        <TextField
-          required={true}
-          label="login"
-          margin="normal"
-          onChange={this.handleLoginChange}
-        />
-        <TextField
-          required={true}
-          label="password"
-          margin="normal"
-          onChange={this.handlePasswordChange}
-          type="password"
-        />
-        <TextField
-          required={true}
-          label="name"
-          margin="normal"
-          onChange={this.handleNameChange}
-        />
-        <Button
-          variant="outlined"
-          color="primary"
-          type="submit"
-          disabled={!isFormValid}
-        >
-          Register
-        </Button>
-      </form>
-    );
-  }
+  const handleLoginChange = (ev: React.ChangeEvent<HTMLInputElement>) => setLogin(ev.currentTarget.value);
 
-  handleLoginChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ login: ev.currentTarget.value });
-  }
+  const handlePasswordChange = (ev: React.ChangeEvent<HTMLInputElement>) => setPassword(ev.currentTarget.value);
 
-  handlePasswordChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ password: ev.currentTarget.value });
-  }
+  const handleNameChange = (ev: React.ChangeEvent<HTMLInputElement>) => setName(ev.currentTarget.value);
 
-  handleNameChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ name: ev.currentTarget.value });
-  }
-
-  handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    const { login, password, name } = this.state;
-    this.props.onRegister({ login, password, name });
+    props.onRegister({ login, password, name });
+  };
+
+  const isFormValid = !!login && !!password && !!name;
+
+  if (props.token) {
+    return <Redirect to="/posts" />;
   }
 
-  isFormValid = (): boolean => {
-    const { login, password, name } = this.state;
-    return !!login && !!password && !!name;
-  }
-}
+  return (
+    <form onSubmit={handleSubmit} style={styles.form}>
+      <TextField required={true} label="login" margin="normal" onChange={handleLoginChange} />
+      <TextField required={true} label="password" margin="normal" onChange={handlePasswordChange} type="password" />
+      <TextField required={true} label="name" margin="normal" onChange={handleNameChange} />
+      <Button variant="outlined" color="primary" type="submit" disabled={!isFormValid}>
+        Register
+      </Button>
+    </form>
+  );
+};
 
 interface IMapStateToProps extends StoreState {
   token: string | null;
@@ -104,9 +73,7 @@ interface IMapDispatchToProps {
   onRegister: (data: IRegisterData) => void;
 }
 
-const mapDispatchToProps = (
-  dispatch: (action: any) => void
-): IMapDispatchToProps => {
+const mapDispatchToProps = (dispatch: (action: any) => void): IMapDispatchToProps => {
   return {
     onRegister: data => dispatch(register(data))
   };
