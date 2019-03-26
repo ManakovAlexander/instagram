@@ -7,7 +7,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 
 import PostMenu from './PostMenu';
-import DateFormatter from '../../../components/DateFormatter';
+import DateFormatter from '../../../common-components/DateFormatter';
 import { IPostView } from '../../../models/post';
 
 interface IProps {
