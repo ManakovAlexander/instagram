@@ -9,6 +9,7 @@ import Avatar from '@material-ui/core/Avatar';
 import PostMenu from './PostMenu';
 import DateFormatter from '../../../common-components/DateFormatter';
 import { IPostView } from '../../../models/post';
+import { baseUrl } from '../../../constants';
 
 interface IProps {
   post: IPostView;
@@ -20,7 +21,7 @@ const Post: FunctionComponent<IProps> = ({ post, onDelete }) => {
   return (
     <Card>
       <CardHeader
-        avatar={<Avatar aria-label="Avatar" src={`http://localhost:1337/files/${post.user.avatarId}`} />}
+        avatar={<Avatar aria-label="Avatar" src={`${baseUrl}/files/${post.user.avatarId}`} />}
         action={<PostMenu onDelete={handleDelete} />}
         title={post.user.name}
         subheader={<DateFormatter format="D MMM in H:mm">{post.created}</DateFormatter>}
@@ -30,7 +31,7 @@ const Post: FunctionComponent<IProps> = ({ post, onDelete }) => {
           height: 0,
           paddingTop: '56.25%'
         }}
-        image={`http://localhost:1337/files/${post.media[0]}`}
+        image={`${baseUrl}/files/${post.media[0]}`}
       />
       <CardContent>
         <Typography gutterBottom={true} variant="headline" component="h2">
