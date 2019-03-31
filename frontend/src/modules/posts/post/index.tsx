@@ -23,7 +23,7 @@ const Post: FunctionComponent<IProps> = ({ post, onDelete }) => {
         avatar={<Avatar aria-label="Avatar" src={`http://localhost:1337/files/${post.user.avatarId}`} />}
         action={<PostMenu onDelete={handleDelete} />}
         title={post.user.name}
-        subheader={<DateFormatter format="d mmm in H:MM">{post.created}</DateFormatter>}
+        subheader={<DateFormatter format="D MMM in H:mm">{post.created}</DateFormatter>}
       />
       <CardMedia
         style={{
