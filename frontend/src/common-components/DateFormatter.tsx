@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import dateformat from 'dateformat';
+import { format as formatFns } from 'date-fns';
 
 interface IProps {
   format: string;
@@ -7,12 +7,8 @@ interface IProps {
 }
 
 const DateFormatter: FunctionComponent<IProps> = ({ format, children }) => {
-  const formattedDate = dateformat(children, format);
+  const formattedDate = formatFns(children, format);
   return <>{formattedDate}</>;
-};
-
-DateFormatter.defaultProps = {
-  format: 'default'
 };
 
 export default React.memo<IProps>(DateFormatter);

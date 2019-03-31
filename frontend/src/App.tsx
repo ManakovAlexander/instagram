@@ -14,7 +14,7 @@ import Profile from './modules/profile';
 import Register from './modules/register';
 import Auth from './modules/auth';
 
-import Footer from './components/Footer';
+import Footer from './common-components/Footer';
 
 import store from './store';
 
