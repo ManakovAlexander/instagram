@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -14,14 +14,14 @@ const Auth: FunctionComponent<IProps> = props => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLoginChange = (ev: React.ChangeEvent<HTMLInputElement>) => setLogin(ev.currentTarget.value);
+  const handleLoginChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setLogin(ev.currentTarget.value), [setLogin]);
 
-  const handlePasswordChange = (ev: React.ChangeEvent<HTMLInputElement>) => setPassword(ev.currentTarget.value);
+  const handlePasswordChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setPassword(ev.currentTarget.value), [setPassword]);
 
-  const handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback((ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
     props.onAuth({ login, password });
-  };
+  }, [props.onAuth]);
 
   const isFormValid = !!login && !!password;
   return (

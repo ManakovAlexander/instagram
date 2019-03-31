@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useCallback } from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -16,7 +16,7 @@ interface IProps {
 }
 
 const Post: FunctionComponent<IProps> = ({ post, onDelete }) => {
-  const handleDelete = () => onDelete(post._id);
+  const handleDelete = useCallback(() => onDelete(post._id), [onDelete, post._id]);
   return (
     <Card>
       <CardHeader

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useCallback } from 'react';
 import { Dialog, DialogTitle, DialogActions, Button, DialogContent, DialogContentText } from '@material-ui/core';
 
 interface IProps {
@@ -8,8 +8,8 @@ interface IProps {
 
 const PostMenuDeleteDialog: FunctionComponent<IProps> = props => {
   const { onClose, ...other } = props;
-  const handleCancel = () => onClose(false);
-  const handleDelete = () => onClose(true);
+  const handleCancel = useCallback(() => onClose(false), [onClose]);
+  const handleDelete = useCallback(() => onClose(true), [onClose]);
   return (
     <Dialog {...other}>
       <DialogTitle>Delete post</DialogTitle>

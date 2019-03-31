@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -17,22 +17,25 @@ const EditPost: FunctionComponent<IProps> = props => {
   const [description, setDescription] = useState('');
   const [media, setMedia] = useState<IMedia[]>([]);
 
-  const handleFileChange = async (ev: React.ChangeEvent<HTMLInputElement>) => {
-    const mediaFile = await readFile(ev);
-    if (mediaFile) {
-      setMedia(media.concat(mediaFile));
-    }
-  };
+  const handleFileChange = useCallback(
+    async (ev: React.ChangeEvent<HTMLInputElement>) => {
+      const mediaFile = await readFile(ev);
+      if (mediaFile) {
+        setMedia(media.concat(mediaFile));
+      }
+    },
+    [setMedia]
+  );
 
-  const handleTitleChange = (ev: React.ChangeEvent<HTMLInputElement>) => setTitle(ev.target.value);
+  const handleTitleChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setTitle(ev.target.value), [setTitle]);
 
-  const handleDescriptionChange = (ev: React.ChangeEvent<HTMLInputElement>) => setDescription(ev.target.value);
+  const handleDescriptionChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setDescription(ev.target.value), [setDescription]);
 
   const postIsValid = media.length > 0 && !!title;
 
   const saveIsDisabled = !postIsValid || props.saveInProgress || props.fetchInProgress;
 
-  const sendPost = () => {
+  const sendPost = useCallback(() => {
     if (!postIsValid) {
       return;
     }
@@ -51,7 +54,7 @@ const EditPost: FunctionComponent<IProps> = props => {
     }
 
     props.onCreatePosts(postFormData);
-  };
+  }, [postIsValid, media, title, description, props.onCreatePosts]);
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 
 import { IStore } from '../../reducers';
@@ -16,11 +16,14 @@ const Page: FunctionComponent<IProps> = props => {
     props.fetchCurrentUser();
   }, []);
 
-  function handleUpdateAvatar(media: IMedia) {
-    const formData = new FormData();
-    formData.append('avatar', media.file);
-    props.updateAvatar(formData);
-  }
+  const handleUpdateAvatar = useCallback(
+    (media: IMedia) => {
+      const formData = new FormData();
+      formData.append('avatar', media.file);
+      props.updateAvatar(formData);
+    },
+    [props.updateAvatar]
+  );
 
   const { currentUser } = props;
   if (!currentUser) {

@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent } from 'react';
+import React, { useState, FunctionComponent, useCallback, useMemo } from 'react';
 import isEqual from 'lodash/isEqual';
 import { TextField } from '@material-ui/core';
 
@@ -13,17 +13,20 @@ interface IProps {
 const EditProfile: FunctionComponent<IProps> = (props: { profile: ICurrentUser }) => {
   const [profile, setProfile] = useState<ICurrentUser | null>(null);
 
-  const shouldUpdateProfile = isEqual(props.profile, profile) === false;
+  const shouldUpdateProfile = useMemo(() => isEqual(props.profile, profile) === false, [props.profile, profile]);
   if (shouldUpdateProfile) {
     setProfile(props.profile);
   }
 
-  function handleNameChange(ev: React.ChangeEvent<HTMLInputElement>) {
-    if (profile) {
-      const name = ev.currentTarget.value;
-      setProfile({ ...profile, name });
-    }
-  }
+  const handleNameChange = useCallback(
+    (ev: React.ChangeEvent<HTMLInputElement>) => {
+      if (profile) {
+        const name = ev.currentTarget.value;
+        setProfile({ ...profile, name });
+      }
+    },
+    [profile, setProfile]
+  );
 
   if (!profile) {
     return null;

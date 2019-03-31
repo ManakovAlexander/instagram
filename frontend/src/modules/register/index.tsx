@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useCallback } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
@@ -23,16 +23,19 @@ const Register: FunctionComponent<IProps> = props => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
-  const handleLoginChange = (ev: React.ChangeEvent<HTMLInputElement>) => setLogin(ev.currentTarget.value);
+  const handleLoginChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setLogin(ev.currentTarget.value), [setLogin]);
 
-  const handlePasswordChange = (ev: React.ChangeEvent<HTMLInputElement>) => setPassword(ev.currentTarget.value);
+  const handlePasswordChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setPassword(ev.currentTarget.value), [setPassword]);
 
-  const handleNameChange = (ev: React.ChangeEvent<HTMLInputElement>) => setName(ev.currentTarget.value);
+  const handleNameChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setName(ev.currentTarget.value), [setName]);
 
-  const handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
-    ev.preventDefault();
-    props.onRegister({ login, password, name });
-  };
+  const handleSubmit = useCallback(
+    (ev: React.FormEvent<HTMLFormElement>) => {
+      ev.preventDefault();
+      props.onRegister({ login, password, name });
+    },
+    [props.onRegister]
+  );
 
   const isFormValid = !!login && !!password && !!name;
 

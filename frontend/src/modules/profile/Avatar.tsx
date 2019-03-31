@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useCallback } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import { PhotoCamera } from '@material-ui/icons';
 
@@ -12,13 +12,16 @@ interface IProps {
 }
 
 const Avatar: FunctionComponent<IProps> = ({ avatarId, updateAvatar }) => {
-  async function handleFileChange(ev: React.ChangeEvent<HTMLInputElement>) {
-    const media = await readFile(ev);
-    if (!media) {
-      return;
-    }
-    updateAvatar(media);
-  }
+  const handleFileChange = useCallback(
+    async (ev: React.ChangeEvent<HTMLInputElement>) => {
+      const media = await readFile(ev);
+      if (!media) {
+        return;
+      }
+      updateAvatar(media);
+    },
+    [updateAvatar]
+  );
 
   return (
     <div className={styles.avatar_container}>
