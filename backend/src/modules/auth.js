@@ -12,9 +12,11 @@ router.put('', async (req, res, next) => {
     const { login, password } = req.body;
     const user = await User.findOne({ login, password }).exec();
     if (!user) {
-      throw new Error('Invalid login or password');
+      const error = new Error('Invalid login or password');
+      error.status = 401;
+      throw error;
     }
-    const token = uuidv4()
+    const token = uuidv4();
     await AuthToken.create({
       _id: new mongoose.Types.ObjectId(),
       userId: user._id,

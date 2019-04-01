@@ -7,6 +7,7 @@ import { IStore } from '../../reducers';
 import { IAuthData } from '../../models/auth';
 import { auth } from '../../actions/auth';
 import styles from './index.module.css';
+import ErrorSnackbar from '../../common-components/ErrorSnackbar';
 
 interface IProps extends IMapStateToProps, IMapDispathToProps {}
 
@@ -18,10 +19,13 @@ const Auth: FunctionComponent<IProps> = props => {
 
   const handlePasswordChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setPassword(ev.currentTarget.value), []);
 
-  const handleSubmit = useCallback((ev: React.FormEvent<HTMLFormElement>) => {
-    ev.preventDefault();
-    props.onAuth({ login, password });
-  }, [props.onAuth]);
+  const handleSubmit = useCallback(
+    (ev: React.FormEvent<HTMLFormElement>) => {
+      ev.preventDefault();
+      props.onAuth({ login, password });
+    },
+    [props.onAuth, login, password]
+  );
 
   const isFormValid = !!login && !!password;
   return (
@@ -31,6 +35,7 @@ const Auth: FunctionComponent<IProps> = props => {
       <Button variant="outlined" color="primary" type="submit" disabled={!isFormValid}>
         Login
       </Button>
+      <ErrorSnackbar open={!!props.error} message={props.error ? props.error.message : null} />
     </form>
   );
 };
