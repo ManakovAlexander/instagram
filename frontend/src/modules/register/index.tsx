@@ -23,11 +23,11 @@ const Register: FunctionComponent<IProps> = props => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
-  const handleLoginChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setLogin(ev.currentTarget.value), [setLogin]);
+  const handleLoginChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setLogin(ev.currentTarget.value), []);
 
-  const handlePasswordChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setPassword(ev.currentTarget.value), [setPassword]);
+  const handlePasswordChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setPassword(ev.currentTarget.value), []);
 
-  const handleNameChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setName(ev.currentTarget.value), [setName]);
+  const handleNameChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setName(ev.currentTarget.value), []);
 
   const handleSubmit = useCallback(
     (ev: React.FormEvent<HTMLFormElement>) => {

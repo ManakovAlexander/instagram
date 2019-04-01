@@ -24,12 +24,12 @@ const EditPost: FunctionComponent<IProps> = props => {
         setMedia(media.concat(mediaFile));
       }
     },
-    [setMedia]
+    []
   );
 
-  const handleTitleChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setTitle(ev.target.value), [setTitle]);
+  const handleTitleChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setTitle(ev.target.value), []);
 
-  const handleDescriptionChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setDescription(ev.target.value), [setDescription]);
+  const handleDescriptionChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setDescription(ev.target.value), []);
 
   const postIsValid = media.length > 0 && !!title;
 

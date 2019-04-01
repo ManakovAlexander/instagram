@@ -14,9 +14,9 @@ const Auth: FunctionComponent<IProps> = props => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLoginChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setLogin(ev.currentTarget.value), [setLogin]);
+  const handleLoginChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setLogin(ev.currentTarget.value), []);
 
-  const handlePasswordChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setPassword(ev.currentTarget.value), [setPassword]);
+  const handlePasswordChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => setPassword(ev.currentTarget.value), []);
 
   const handleSubmit = useCallback((ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();

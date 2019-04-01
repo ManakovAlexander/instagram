@@ -25,7 +25,7 @@ const EditProfile: FunctionComponent<IProps> = (props: { profile: ICurrentUser }
         setProfile({ ...profile, name });
       }
     },
-    [profile, setProfile]
+    [profile]
   );
 
   if (!profile) {

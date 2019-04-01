@@ -23,7 +23,7 @@ const PostMenu: FunctionComponent<IProps> = props => {
         props.onDelete();
       }
     },
-    [setShowDeleteDialog, props.onDelete]
+    [props.onDelete]
   );
 
   const handleClose = useCallback(() => setAnchorEl(null), [setAnchorEl]);
@@ -31,7 +31,7 @@ const PostMenu: FunctionComponent<IProps> = props => {
   const handleDeleteMenuItemClicked = useCallback(() => {
     handleClose();
     setShowDeleteDialog(true);
-  }, [handleClose, setShowDeleteDialog]);
+  }, [handleClose]);
 
   const isOpen = Boolean(anchorEl);
 
